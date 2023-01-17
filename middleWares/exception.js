@@ -12,9 +12,10 @@ const catchError = async (ctx, next) => {
     }catch(error){
         // error处理，返回给前端有用信息
         // 返回信息包含 msg， status， errorCode， request_url
-
+        console.log(error);
         // 已知错误
         if(error instanceof HttpException){
+            console.log('已知异常');
             ctx.body = {
                 msg: error.msg,
                 error_code: error.errorCode,
@@ -23,6 +24,7 @@ const catchError = async (ctx, next) => {
             ctx.status = error.code
         }
         else{
+            console.log('未知异常');
             // 未知异常
             ctx.body = {
                 msg: 'An unknown mistake propose',

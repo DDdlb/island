@@ -10,7 +10,7 @@ class InitManager {
         // 初始化路由
         InitManager.initLoadRouters()
         // 初始化全局异常
-        InitManager.loadHttpException()
+        // InitManager.loadHttpException()
     }
     static initLoadRouters(){
         const whenLoadModule = (obj) => {

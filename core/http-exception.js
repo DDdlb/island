@@ -20,7 +20,47 @@ class ParamException extends HttpException {
     }
 }
 
+class Success extends HttpException {
+    constructor(msg, errorCode){
+        super()
+        this.code = 200
+        this.msg = msg || 'ok'
+        this.errorCode = errorCode || 0
+    }
+}
+
+class AuthFailed extends HttpException {
+    constructor(msg, errorCode){
+        super()
+        this.code = 401
+        this.msg = msg || '授权失败'
+        this.errorCode = errorCode || 10004
+    }
+}
+
+class NotFound extends HttpException {
+    constructor(msg, errorCode){
+        super()
+        this.code = 404
+        this.msg = msg || 'not Found'
+        this.errorCode = errorCode || 404
+    }
+}
+
+class Forbidden extends HttpException {
+    constructor(msg, errorCode){
+        super()
+        this.code = 403
+        this.msg = msg || '无权限'
+        this.errorCode = errorCode || 100003
+    }
+}
+
 module.exports = {
     HttpException,
-    ParamException
+    ParamException,
+    Success,
+    NotFound,
+    AuthFailed,
+    Forbidden
 }
