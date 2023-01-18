@@ -33,7 +33,7 @@ class Auth {
                 }
                 throw new Forbidden(errMsg)
             }
-            console.log(decode.scope, this.level);
+            
             if(decode.scope < this.level){
                 errMsg = '权限不足'
                 throw new Forbidden(errMsg)

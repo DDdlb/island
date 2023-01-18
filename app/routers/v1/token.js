@@ -5,6 +5,7 @@ const Auth = require('../../../middleWares/auth')
 const { LoginType } = require('../../lib/enum')
 const { User } = require('../../models/user')
 const { TokenValidator } = require('../../validators/user')
+const { WXManager } = require('../../services/wx')
 const router = new Router({
     prefix: '/v1/token'
 })
@@ -17,14 +18,20 @@ router.post('/', async (ctx) => {
         case LoginType.USER_EMAIL:
             // 这里必须加 await 否则无法捕获异常， async函数前必须加await
             token = await emailLogin(v.get('body.account'), v.get('body.secret'))
+            
+            break;
+        case LoginType.USER_MINI_PROGRAM:
+            // console.log('mini program', ctx.request.body);
+            token = await WXManager.codeToToken(ctx.request.body.code)
+            
             break;
         default:
             throw new ParamException('无type处理函数')
+    
     }
     ctx.body = {
         token
     }
-
 })
 
 const emailLogin = async (email, secret) => {

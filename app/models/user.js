@@ -5,6 +5,12 @@ const {Sequelize, Model} = require('sequelize')
 const { NotFound, AuthFailed } = require('../../core/http-exception')
 
 class User extends Model {
+    /**
+     * @description 判断email和password 是否匹配
+     * @param {*} email 
+     * @param {*} password 
+     * @returns 密码匹配返回用户信息，不匹配，抛出异常
+     */
     static async verifyEmailPassword(email, password){
         const user = await User.findOne({
             where: {
@@ -21,6 +27,21 @@ class User extends Model {
             throw new AuthFailed('用户名或密码错误')
         }
         return user
+    }
+
+    static async getUserByOpenid(openid){
+        const user = await User.findOne({
+            where: {
+                openid
+            }
+        })
+        return user
+    }
+
+    static async registerByOpenid(openid){
+        return await User.create({
+            openid
+        })
     }
 }
 
